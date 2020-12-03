@@ -1,11 +1,13 @@
 import { Fragment } from 'react'
 import Link from 'next/link'
 
-const Timeline = () => {
+const Timeline = ({ name }) => {
+
 	return (
 		<Fragment>
+      {console.log('timeline render', name)}
 			<h2>This is a Timeline view</h2>
-			<h4>Holis</h4>
+      <p>{`Hiii, ${ name }`}</p>
 			<Link href="/">
 				<a>Go Home</a>
 			</Link>
@@ -17,6 +19,13 @@ const Timeline = () => {
 			`}</style>
 		</Fragment>
 	)
+}
+
+Timeline.getInitialProps = () => {
+  // return { name: 'Agustin' }
+  return fetch('http://localhost:3000/api/hello')
+    .then(res => res.json())
+    .then(response => response)
 }
 
 export default Timeline
