@@ -23,7 +23,7 @@ const Timeline = ({ name }) => {
 
 Timeline.getInitialProps = () => {
   // return { name: 'Agustin' }
-  return fetch('http://localhost:3000/api/countries')
+  return fetch('http://localhost:3000/api/hello')
     .then(res => res.json())
     .then(response => response)
 }
