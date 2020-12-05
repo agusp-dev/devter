@@ -2,10 +2,9 @@ import { Fragment } from 'react'
 import { fonts, colors, breakpoints } from '../../styles/theme'
 
 export default function Button ({ children, onclick }) {
-  console.log(children)
   return (
     <Fragment>
-      <button onclick={ onclick }>
+      <button onClick={ onclick }>
         { children }
       </button>
       

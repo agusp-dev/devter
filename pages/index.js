@@ -1,26 +1,58 @@
-import { Fragment } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import AppLayout from '../components/AppLayout'
 import Button from '../components/Button'
 import GitHub from '../components/Icons/GitHub'
-import { fonts, colors, breakpoints } from '../styles/theme'
-
+import { colors } from '../styles/theme'
+import { loginWithGitHub, onAuthStateChanged } from '../firebase/client'
 
 export default function Home() {
+
+  /**
+   * User states
+   * Allow no jumps in the UI.  
+   * 
+   * null --> not authenticated
+   * undefined --> not know if is authenticated
+   * object --> authenticated
+   */
+  const [user, setUser] = useState(undefined)
+
+  const handleGitHubClick = () => {
+    loginWithGitHub()
+      .then(user => {
+        setUser(user)
+      }).catch(err => {
+        console.log(err)
+      })
+  }
+
+  useEffect(() => {
+    onAuthStateChanged(setUser)
+  }, [])
+
   return (
 		<Fragment>
       <AppLayout>
         <section>
-          <img src='/img-fullstack.jpg' alt='logo' />
+          <img src='/devter.png' alt='logo' />
           <h1>Devter</h1>
           <h2>Talk about development <br />with developers 👨‍💻👩‍💻</h2>
           <div>
-            <Button>
-              <GitHub 
-                width={24}
-                height={24}
-                fill='#fff'/>
-              Login with Github
-            </Button>
+            {user === null && (
+              <Button onclick={ handleGitHubClick }>
+                <GitHub 
+                  width={24}
+                  height={24}
+                  fill='#fff'/>
+                Login with Github
+              </Button>
+            )}
+            {user && Object.keys(user).length > 0 && (
+              <div>
+                <img src={ user.avatar } alt='logo'/>
+                <strong>{ user.username }</strong>
+              </div>
+            )}
           </div>
         </section>
       </AppLayout>
