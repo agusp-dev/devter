@@ -1,10 +1,7 @@
 import { Fragment } from 'react'
 import Head from 'next/head'
-import styles, { globalStyles } from './styles'
-
 
 function MyApp({ Component, pageProps }) {
-
 	return (
 		<Fragment>
 			<Head>
@@ -12,8 +9,6 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 			<Component {...pageProps}/>
-			<style jsx global>{ globalStyles }</style>
-			<style jsx>{ styles }</style>
 		</Fragment>
 	)
 }
